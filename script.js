@@ -23,9 +23,9 @@
 //   3. The status message area (id="status")
 // --------------------------------------------
 
-const textBox = 
-const outputBox = 
-const statusBox = 
+const textBox = document.querySelector("#user-input");
+const outputBox = document.querySelector("#quiz-outputs");
+const statusBox = document.querySelector("#status");
 
 // This console.log helps us verify our selections worked correctly.
 // Open the browser's Developer Tools (F12) to see the output.
@@ -60,44 +60,41 @@ let pluto = false;
 // --------------------------------------------
 
 const checkAnswer = () => {
-  // Get the current value from the text input
-  
-
-  // TODO: Create if/else if/else statements to check for each planet.
-  // For each correct answer:
-  //   1. Add an <h3> with the planet name and a <p> with a fun fact
-  //   2. Increase the score by 1
-  // For incorrect answers:
-  //   - Display an error message in the statusBox
-
-  if (currentAnswer === "Mercury") {
-
-  } else if (currentAnswer === "Venus") {
-
-  } else if (currentAnswer === "Earth") {
-
+  const currentAnswer = textBox.value;
+  console.log("Checking", currentAnswer);
+  // Match against boroughs.
+  if (currentAnswer === "Earth") {
+    outputBox.innerHTML += `<h3>Earth</h3><p>Its where we are</p>`;
+    score += 1;
+  } else if (currentAnswer === "Mercury") {
+    outputBox.innerHTML += `<h3>Mercury</h3><p>The planet closest to the sun</p>`;
+    score += 1;
+  } else if (currentAnswer === "Venus" || currentAnswer === "The Bronx") {
+    outputBox.innerHTML += `<h3>Venus</h3><p>sometimes called earths sister planet due to its similar size</p>`;
+    score += 1;
   } else if (currentAnswer === "Mars") {
-
+    outputBox.innerHTML += `<h3>Mars</h3><p>The planet we are most likely to inhabit next</p>`;
+    score += 1;
   } else if (currentAnswer === "Jupiter") {
-
+    outputBox.innerHTML += `<h3>Jupiter</h3><p>Best known for its storms. It even has an eye-like storm on its surface</p>`;
+    score += 1;
   } else if (currentAnswer === "Saturn") {
-
+    outputBox.innerHTML += `<h3>Saturn</h3><p>Best known for its massive rings. Its also the largest of all the planets</p>`;
+    score += 1;
   } else if (currentAnswer === "Uranus") {
-
+    outputBox.innerHTML += `<h3>Uranus</h3><p>The planet with the weird name. Also has small rings like Saturn</p>`;
+    score += 1;
   } else if (currentAnswer === "Neptune") {
-
+    outputBox.innerHTML += `<h3>Neptune</h3><p>The planet farthest from the sun, and is also the coldest.</p>`;
+    score += 1;
   } else if (currentAnswer === "Pluto") {
-    // Secret bonus answer - Pluto was reclassified as a dwarf planet in 2006
-  
+    outputBox.innerHTML += `<h3>Pluto</h3><p>You found the dwarf planet!</p>`;
+    pluto = true;
   } else {
-    // If no conditions match, show an error message
-  
+    statusBox.innerHTML = `Sorry, but ${currentAnswer} is not a planet.`;
   }
-
-  // After checking the answer, verify if the game is complete
   checkScore();
-
-  // Reset the text box for the next answer
+  // Reset the textBox
   textBox.value = "";
 };
 
@@ -115,12 +112,12 @@ const checkAnswer = () => {
 
 const checkScore = () => {
   if (score === 8) {
-   
+    statusBox.innerHTML = "Congratulations, you found all 8 planets in our solar system!";
   }
   if (score === 8 && pluto) {
-    
-    // Disable the text box since the game is complete
-    
+    statusBox.innerHTML =
+      "A true astronomer! All 8 planets and the dwarf planet Pluto!";
+    textBox.disabled = true;
   }
 };
 
@@ -142,3 +139,4 @@ const checkScore = () => {
 //   - Calls the checkAnswer function when triggered
 // --------------------------------------------
 
+textBox.addEventListener("change", checkAnswer);
